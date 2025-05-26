@@ -17,9 +17,9 @@ public class Main {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLayout(new BorderLayout());    
 
+        // Barra de navegación superior
         JPanel nav_bar = new JPanel(new BorderLayout());
         nav_bar.setBackground(new Color(36, 30, 78));
-        
         
         JPanel left_panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         left_panel.setOpaque(false);
@@ -33,7 +33,6 @@ public class Main {
         JLabel icon_logo = new JLabel(resizedIcon);
         left_panel.add(icon_logo);
         left_panel.add(menu);
-        
 
         JPanel right_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         right_panel.setOpaque(false);
@@ -49,7 +48,6 @@ public class Main {
         nav_bar.add(left_panel, BorderLayout.WEST);
         nav_bar.add(right_panel, BorderLayout.EAST);
 
-        // Ajuste de cada panel en su sitio de la ventana
         jf.add(nav_bar, BorderLayout.NORTH);
 
         // Permitir la visibilidad de todo lo añadido
