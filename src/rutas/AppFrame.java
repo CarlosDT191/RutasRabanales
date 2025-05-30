@@ -24,7 +24,7 @@ public class AppFrame extends JFrame {
         add(contentPanel, BorderLayout.CENTER);
 
         // Página inicial
-        setContent(new MainPage());
+        setContent(new MainPage(this));
 
         setVisible(true);
     }
@@ -52,7 +52,7 @@ public class AppFrame extends JFrame {
         add(contentPanel, BorderLayout.CENTER); // Reusa contentPanel
 
         // Por simplicidad: recargamos la página principal
-        setContent(new MainPage());
+        setContent(new MainPage(this));
 
         revalidate();
         repaint();

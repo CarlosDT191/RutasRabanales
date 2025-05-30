@@ -1,14 +1,13 @@
 package rutas.components;
 
+import bundle.LanguageManager;
+import java.awt.*;
+import java.util.ResourceBundle;
+import javax.swing.*;
 import rutas.AppFrame;
 import rutas.Ayuda;
 import rutas.Login;
 import rutas.MainPage;
-import bundle.LanguageManager;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ResourceBundle;
 
 public class NavBar extends JPanel {
     private JButton help;
@@ -29,7 +28,7 @@ public class NavBar extends JPanel {
         left_panel.setOpaque(false);
 
         menu = new JButton("Rutas de Rabanales");
-        menu.addActionListener(e -> appFrame.setContent(new MainPage()));
+        menu.addActionListener(e -> appFrame.setContent(new MainPage(appFrame)));
 
         ImageIcon logo = new ImageIcon("data/logo_rr.png");
         Image scaledImage = logo.getImage().getScaledInstance(80, 40, Image.SCALE_SMOOTH);
