@@ -1,13 +1,21 @@
 package rutas.components;
 
+import rutas.AppFrame;
+import rutas.Ayuda;
+import bundle.LanguageManager;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.swing.*;
 
 public class Footer extends JPanel {
-    public Footer() {
+    public Footer(AppFrame appFrame) {
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         this.setBackground(Color.WHITE);
+
+        ResourceBundle bundle = LanguageManager.getBundle();
 
         // Parte superior (logo + título)
         JPanel topFooter = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -31,12 +39,23 @@ public class Footer extends JPanel {
 
         JPanel leftFooter = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftFooter.setOpaque(false);
-        leftFooter.add(new JButton("Ayuda"));
+
+        JButton help = new JButton(bundle.getString("help"));
+        JButton language = new JButton(bundle.getString("language"));
+
+        help.addActionListener((ActionEvent e) -> appFrame.setContent(new Ayuda()));
+        language.addActionListener((ActionEvent e) -> {
+            LanguageManager.toggleLanguage();
+            appFrame.refresh();
+        });
+
+        leftFooter.add(help);
         leftFooter.add(new JLabel("|"));
-        leftFooter.add(new JButton("Cambiar Idioma a Inglés"));
+        leftFooter.add(language);
 
         JPanel rightFooter = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightFooter.setOpaque(false);
+
         ImageIcon logosIcon = new ImageIcon("data/footer_logos.png");
         Image scaledLogos = logosIcon.getImage().getScaledInstance(350, 70, Image.SCALE_SMOOTH);
         rightFooter.add(new JLabel(new ImageIcon(scaledLogos)));
@@ -48,4 +67,3 @@ public class Footer extends JPanel {
         this.add(bottomFooter, BorderLayout.CENTER);
     }
 }
-
