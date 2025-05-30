@@ -1,9 +1,8 @@
 package rutas;
 
+import bundle.LanguageManager;
 import java.awt.*;
 import javax.swing.*;
-
-import bundle.LanguageManager;
 
 public class MainPage extends JPanel {
 
@@ -22,9 +21,9 @@ public class MainPage extends JPanel {
         leftTextPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         JLabel titleLabel = new JLabel(LanguageManager.getBundle().getString("welcome"));
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
         JLabel subtitleLabel = new JLabel(LanguageManager.getBundle().getString("main_text"));
-        subtitleLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        subtitleLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
         subtitleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         
         leftTextPanel.add(titleLabel);
@@ -99,7 +98,8 @@ public class MainPage extends JPanel {
 
         JLabel titleLabel = new JLabel("<html><b>" + title + "</b></html>");
         JLabel descLabel = new JLabel("<html>" + description + "</html>");
-        descLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        titleLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        descLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
 
         textPanel.add(titleLabel);
         textPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio
