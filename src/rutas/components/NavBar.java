@@ -8,6 +8,7 @@ import rutas.AppFrame;
 import rutas.Ayuda;
 import rutas.Login;
 import rutas.MainPage;
+import rutas.components.RoundedButton;
 
 public class NavBar extends JPanel {
     private JButton help;
@@ -49,8 +50,10 @@ public class NavBar extends JPanel {
             appFrame.refresh();                 // Refrescar la interfaz
         });
 
-        login = new JButton(bundle.getString("login"));
-        login.addActionListener(e -> appFrame.setContent(new Login()));
+        RoundedButton login = new RoundedButton(bundle.getString("login"), 20, true);
+        login.setBackground(new Color(36, 30, 78));
+        login.setPreferredSize(new Dimension(200, 40));
+        login.addActionListener(e -> appFrame.setContent(new Login(appFrame)));
 
         right_panel.add(help);
         right_panel.add(language);

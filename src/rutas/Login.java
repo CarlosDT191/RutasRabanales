@@ -2,10 +2,12 @@ package rutas;
 import bundle.LanguageManager;
 import java.awt.*;
 import javax.swing.*;
+
+import rutas.components.RoundedButton;
 import rutas.components.RoundedPanel;
 
 public class Login extends JPanel {
-    public Login() {
+    public Login(AppFrame appFrame) {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -81,7 +83,10 @@ public class Login extends JPanel {
         // Botón
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomButtonPanel.setOpaque(false);
-        JButton loginButton = new JButton(LanguageManager.getBundle().getString("login"));
+        RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false);
+        loginButton.setBackground(new Color(36, 30, 78));
+        loginButton.setPreferredSize(new Dimension(200, 40));
+        loginButton.addActionListener(e -> appFrame.setContent(new Busqueda(appFrame)));
         bottomButtonPanel.add(loginButton);
 
         formInnerPanel.add(bottomButtonPanel);
