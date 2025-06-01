@@ -1,4 +1,5 @@
 package rutas;
+
 import bundle.LanguageManager;
 import java.awt.*;
 import javax.swing.*;
@@ -6,12 +7,12 @@ import javax.swing.*;
 import rutas.components.RoundedButton;
 import rutas.components.RoundedPanel;
 
-public class Login extends JPanel {
-    public Login(AppFrame appFrame) {
+public class LoginFallido extends JPanel {
+    public LoginFallido(AppFrame appFrame) {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // 1. Panel superior: Logo + título
+        // Panel superior
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.WHITE);
 
@@ -35,18 +36,28 @@ public class Login extends JPanel {
         headerPanel.add(titlePanel, BorderLayout.SOUTH);
         add(headerPanel, BorderLayout.NORTH);
 
-        // 2. FORMULARIO
+        // Formulario
         RoundedPanel contentPanel = new RoundedPanel(20);
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        contentPanel.setBackground(new Color(217,217,217));
+        contentPanel.setBackground(new Color(217, 217, 217));
 
-        // Panel interno alineado a la izquierda
         JPanel formInnerPanel = new JPanel();
         formInnerPanel.setLayout(new BoxLayout(formInnerPanel, BoxLayout.Y_AXIS));
         formInnerPanel.setOpaque(false);
         formInnerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        formInnerPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // Margen interno leve
+        formInnerPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+
+        // Mensaje de error
+        JLabel errorLabel = new JLabel(LanguageManager.getBundle().getString("login_error"));
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        errorLabel.setMaximumSize(new Dimension(400, 20));
+        errorLabel.setPreferredSize(new Dimension(400, 20));
+
+        formInnerPanel.add(errorLabel);
+        formInnerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // Usuario
         JLabel UserInt = new JLabel(LanguageManager.getBundle().getString("login_t1"));
@@ -86,29 +97,21 @@ public class Login extends JPanel {
         RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false, false);
         loginButton.setBackground(new Color(36, 30, 78));
         loginButton.setPreferredSize(new Dimension(200, 40));
-        loginButton.addActionListener(e -> {
-            String username = UserTxtF.getText().trim();
-            String password = new String(PasswdField.getPassword()).trim();
-        
-            LoginManager loginManager = new LoginManager();
-        
-            if (loginManager.isValid(username, password)) {
-                appFrame.setContent(new Busqueda(appFrame)); // login exitoso
-            } else {
-                appFrame.setContent(new LoginFallido(appFrame)); // login fallido
-            }
-        });
-        bottomButtonPanel.add(loginButton);
 
+        // Podrías hacer que al hacer clic vuelva a intentar el login
+        loginButton.addActionListener(e -> {
+            // Validación aquí y setContent() dependiendo del resultado
+            appFrame.setContent(new Login(appFrame)); // vuelve al login normal
+        });
+
+        bottomButtonPanel.add(loginButton);
         formInnerPanel.add(bottomButtonPanel);
 
-        // Añadir panel interno al panel gris
         contentPanel.add(formInnerPanel);
 
-        // Centrar todo el formulario en pantalla
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(Color.WHITE);
-        centerWrapper.setBorder(BorderFactory.createEmptyBorder(50, 500, 100, 500)); // Centrado horizontal
+        centerWrapper.setBorder(BorderFactory.createEmptyBorder(50, 500, 100, 500));
         centerWrapper.add(contentPanel, BorderLayout.CENTER);
 
         add(centerWrapper, BorderLayout.CENTER);
