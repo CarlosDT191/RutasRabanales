@@ -40,8 +40,13 @@ public class Footer extends JPanel {
         JPanel leftFooter = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftFooter.setOpaque(false);
 
-        JButton help = new JButton(bundle.getString("help"));
-        JButton language = new JButton(bundle.getString("language"));
+        RoundedButton help = new RoundedButton(bundle.getString("help"), 20, false, true);
+        help.setBackground(Color.WHITE);
+        help.setPreferredSize(new Dimension(150, 40));
+
+        RoundedButton language = new RoundedButton(bundle.getString("language"), 20, false, true);
+        language.setBackground(Color.WHITE);
+        language.setPreferredSize(new Dimension(300, 40));
 
         help.addActionListener((ActionEvent e) -> appFrame.setContent(new Ayuda()));
         language.addActionListener((ActionEvent e) -> {

@@ -42,7 +42,7 @@ public class MainPage extends JPanel {
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomButtonPanel.setBackground(Color.WHITE); // Color similar al original
 
-        RoundedButton login = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false);
+        RoundedButton login = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false, false);
         login.setBackground(new Color(36, 30, 78));
         login.setPreferredSize(new Dimension(200, 40));
         login.addActionListener(e -> appFrame.setContent(new Login(appFrame)));

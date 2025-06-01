@@ -48,7 +48,7 @@ public class Busqueda extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
 
         // Panel Inferior: Botón
-        RoundedButton buscarBtn = new RoundedButton(LanguageManager.getBundle().getString("search_search"), 20, false);
+        RoundedButton buscarBtn = new RoundedButton(LanguageManager.getBundle().getString("search_search"), 20, false, false);
         buscarBtn.setBackground(new Color(36, 30, 78));
         buscarBtn.setPreferredSize(new Dimension(200, 40));
 

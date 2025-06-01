@@ -83,7 +83,7 @@ public class Login extends JPanel {
         // Botón
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomButtonPanel.setOpaque(false);
-        RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false);
+        RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false, false);
         loginButton.setBackground(new Color(36, 30, 78));
         loginButton.setPreferredSize(new Dimension(200, 40));
         loginButton.addActionListener(e -> appFrame.setContent(new Busqueda(appFrame)));

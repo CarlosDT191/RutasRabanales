@@ -12,14 +12,14 @@ public class RoundedButton extends JButton {
     private Color hoverBackground;
     private boolean isHover = false;
 
-    public RoundedButton(String text, int radius, boolean showWhiteBorder) {
+    public RoundedButton(String text, int radius, boolean showWhiteBorder, boolean useAltTextColor) {
         super(text);
         this.radius = radius;
         this.showWhiteBorder = showWhiteBorder;
 
         setContentAreaFilled(false);
         setFocusPainted(false);
-        setForeground(Color.WHITE);
+        setForeground(useAltTextColor ? new Color(36, 30, 78) : Color.WHITE);
         setFont(new Font("SansSerif", Font.BOLD, 16));
         setBorderPainted(false);
 
