@@ -85,19 +85,26 @@ public class Login extends JPanel {
         bottomButtonPanel.setOpaque(false);
         RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false, false);
         loginButton.setBackground(new Color(36, 30, 78));
-        loginButton.setPreferredSize(new Dimension(200, 40));
-        loginButton.addActionListener(e -> {
-            String username = UserTxtF.getText().trim();
-            String password = new String(PasswdField.getPassword()).trim();
+        loginButton.setPreferredSize(new Dimension(300, 40));
+        AbstractAction loginAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                String username = UserTxtF.getText().trim();
+                String password = new String(PasswdField.getPassword()).trim();
         
-            LoginManager loginManager = new LoginManager();
+                LoginManager loginManager = new LoginManager();
         
-            if (loginManager.isValid(username, password)) {
-                appFrame.setContent(new Busqueda(appFrame)); // login exitoso
-            } else {
-                appFrame.setContent(new LoginFallido(appFrame)); // login fallido
+                if (loginManager.isValid(username, password)) {
+                    appFrame.setContent(new Busqueda(appFrame)); // login exitoso
+                } else {
+                    appFrame.setContent(new LoginFallido(appFrame)); // login fallido
+                }
             }
-        });
+        };
+        
+        loginButton.addActionListener(loginAction);
+        UserTxtF.addActionListener(loginAction);
+        PasswdField.addActionListener(loginAction); 
         bottomButtonPanel.add(loginButton);
 
         formInnerPanel.add(bottomButtonPanel);
@@ -108,7 +115,7 @@ public class Login extends JPanel {
         // Centrar todo el formulario en pantalla
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(Color.WHITE);
-        centerWrapper.setBorder(BorderFactory.createEmptyBorder(50, 500, 100, 500)); // Centrado horizontal
+        centerWrapper.setBorder(BorderFactory.createEmptyBorder(80, 600, 200, 600)); // Centrado horizontal
         centerWrapper.add(contentPanel, BorderLayout.CENTER);
 
         add(centerWrapper, BorderLayout.CENTER);

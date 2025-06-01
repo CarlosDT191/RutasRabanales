@@ -3,7 +3,6 @@ package rutas;
 import bundle.LanguageManager;
 import java.awt.*;
 import javax.swing.*;
-
 import rutas.components.RoundedButton;
 import rutas.components.RoundedPanel;
 
@@ -34,7 +33,31 @@ public class LoginFallido extends JPanel {
 
         titlePanel.add(titleLabel);
         headerPanel.add(titlePanel, BorderLayout.SOUTH);
-        add(headerPanel, BorderLayout.NORTH);
+
+        // Panel de mensaje de error
+        RoundedPanel errorPanel = new RoundedPanel(20);
+        errorPanel.setBackground(new Color(246, 124, 124)); // fondo rosado claro
+        errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.Y_AXIS));
+        errorPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30)); // más padding
+
+        errorPanel.setMaximumSize(new Dimension(600, 150));
+
+        JLabel errorLabel = new JLabel(LanguageManager.getBundle().getString("login_error"));
+        errorLabel.setForeground(Color.BLACK); // rojo más oscuro
+        errorLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        errorPanel.add(errorLabel);
+
+        // Panel que agrupa título y mensaje de error
+        JPanel topWrapper = new JPanel();
+        topWrapper.setLayout(new BoxLayout(topWrapper, BoxLayout.Y_AXIS));
+        topWrapper.setBackground(Color.WHITE);
+        topWrapper.add(headerPanel);
+        
+        topWrapper.add(errorPanel);
+
+        add(topWrapper, BorderLayout.NORTH);
 
         // Formulario
         RoundedPanel contentPanel = new RoundedPanel(20);
@@ -47,17 +70,6 @@ public class LoginFallido extends JPanel {
         formInnerPanel.setOpaque(false);
         formInnerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         formInnerPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-
-        // Mensaje de error
-        JLabel errorLabel = new JLabel(LanguageManager.getBundle().getString("login_error"));
-        errorLabel.setForeground(Color.RED);
-        errorLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        errorLabel.setMaximumSize(new Dimension(400, 20));
-        errorLabel.setPreferredSize(new Dimension(400, 20));
-
-        formInnerPanel.add(errorLabel);
-        formInnerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // Usuario
         JLabel UserInt = new JLabel(LanguageManager.getBundle().getString("login_t1"));
@@ -96,13 +108,27 @@ public class LoginFallido extends JPanel {
         bottomButtonPanel.setOpaque(false);
         RoundedButton loginButton = new RoundedButton(LanguageManager.getBundle().getString("login"), 20, false, false);
         loginButton.setBackground(new Color(36, 30, 78));
-        loginButton.setPreferredSize(new Dimension(200, 40));
+        loginButton.setPreferredSize(new Dimension(300, 40));
 
-        // Podrías hacer que al hacer clic vuelva a intentar el login
-        loginButton.addActionListener(e -> {
-            // Validación aquí y setContent() dependiendo del resultado
-            appFrame.setContent(new Login(appFrame)); // vuelve al login normal
-        });
+        AbstractAction loginAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                String username = UserTxtF.getText().trim();
+                String password = new String(PasswdField.getPassword()).trim();
+        
+                LoginManager loginManager = new LoginManager();
+        
+                if (loginManager.isValid(username, password)) {
+                    appFrame.setContent(new Busqueda(appFrame)); // login exitoso
+                } else {
+                    appFrame.setContent(new LoginFallido(appFrame)); // login fallido
+                }
+            }
+        };
+        
+        loginButton.addActionListener(loginAction);
+        UserTxtF.addActionListener(loginAction);
+        PasswdField.addActionListener(loginAction);        
 
         bottomButtonPanel.add(loginButton);
         formInnerPanel.add(bottomButtonPanel);
@@ -111,7 +137,7 @@ public class LoginFallido extends JPanel {
 
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(Color.WHITE);
-        centerWrapper.setBorder(BorderFactory.createEmptyBorder(50, 500, 100, 500));
+        centerWrapper.setBorder(BorderFactory.createEmptyBorder(80, 600, 200, 600));
         centerWrapper.add(contentPanel, BorderLayout.CENTER);
 
         add(centerWrapper, BorderLayout.CENTER);

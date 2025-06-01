@@ -68,11 +68,19 @@ public class Ayuda extends JPanel {
         JLabel q1 = new JLabel(LanguageManager.getBundle().getString("help_gray_t1"));
         q1.setFont(new Font("SansSerif", Font.BOLD, 24));
         q1.setForeground(Color.WHITE);
-        JLabel a1 = new JLabel(LanguageManager.getBundle().getString("help_gray_txt1"));
+        q1.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JTextArea a1 = new JTextArea(LanguageManager.getBundle().getString("help_gray_txt1"));
         a1.setFont(new Font("SansSerif", Font.PLAIN, 18));
         a1.setForeground(Color.WHITE);
+        a1.setBackground(new Color(81, 79, 92)); // mismo fondo que el contentPanel
+        a1.setLineWrap(true);
+        a1.setWrapStyleWord(true);
+        a1.setEditable(false);
+        a1.setOpaque(false); // Para fondo transparente si prefieres
         a1.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
-
+        a1.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         contentPanel.add(q1);
         contentPanel.add(a1);
 
@@ -80,10 +88,18 @@ public class Ayuda extends JPanel {
         JLabel q2 = new JLabel(LanguageManager.getBundle().getString("help_gray_t2"));
         q2.setFont(new Font("SansSerif", Font.BOLD, 24));
         q2.setForeground(Color.WHITE);
-        JLabel a2 = new JLabel(LanguageManager.getBundle().getString("help_gray_txt2"));
+        q2.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JTextArea a2 = new JTextArea(LanguageManager.getBundle().getString("help_gray_txt2"));
         a2.setFont(new Font("SansSerif", Font.PLAIN, 18));
         a2.setForeground(Color.WHITE);
+        a2.setBackground(new Color(81, 79, 92)); // mismo fondo que el contentPanel
+        a2.setLineWrap(true);
+        a2.setWrapStyleWord(true);
+        a2.setEditable(false);
+        a2.setOpaque(false); // Para fondo transparente si prefieres
         a2.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
+        a2.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         contentPanel.add(q2);
         contentPanel.add(a2);
@@ -92,9 +108,18 @@ public class Ayuda extends JPanel {
         JLabel q3 = new JLabel(LanguageManager.getBundle().getString("help_gray_t3"));
         q3.setFont(new Font("SansSerif", Font.BOLD, 24));
         q3.setForeground(Color.WHITE);
-        JLabel a3 = new JLabel(LanguageManager.getBundle().getString("help_gray_txt3"));
+        q3.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JTextArea a3 = new JTextArea(LanguageManager.getBundle().getString("help_gray_txt3"));
         a3.setFont(new Font("SansSerif", Font.PLAIN, 18));
         a3.setForeground(Color.WHITE);
+        a3.setBackground(new Color(81, 79, 92)); // mismo fondo que el contentPanel
+        a3.setLineWrap(true);
+        a3.setWrapStyleWord(true);
+        a3.setEditable(false);
+        a3.setOpaque(false); // Para fondo transparente si prefieres
+        a3.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
+        a3.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         contentPanel.add(q3);
         contentPanel.add(a3);

@@ -36,11 +36,14 @@ public class Busqueda extends JPanel {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         centerPanel.setBackground(Color.WHITE);
 
-        String[] edificiosDisponibles = {"Seleccione", "Edificio A", "Edificio B", "Edificio C"};
-        String[] aulasDisponibles = {"Seleccione", "Aula 101", "Aula 202", "Aula 303"};
+        String[] edificiosDisponiblesOr = {"Seleccione", LanguageManager.getBundle().getString("edificio1")};
+        String[] aulasDisponiblesOr = {"Seleccione", LanguageManager.getBundle().getString("aula1")};
 
-        RoundedPanel origenPanel = createSidePanel(LanguageManager.getBundle().getString("search_t1"), new Color(144, 238, 144), 20, edificiosDisponibles, aulasDisponibles);
-        RoundedPanel destinoPanel = createSidePanel(LanguageManager.getBundle().getString("search_t2"), new Color(240, 128, 128), 20, edificiosDisponibles ,aulasDisponibles);
+        String[] edificiosDisponiblesDst = {"Seleccione", "Celestino Mutis"};
+        String[] aulasDisponiblesDst = {"Seleccione", LanguageManager.getBundle().getString("aula2")};
+
+        RoundedPanel origenPanel = createSidePanel(LanguageManager.getBundle().getString("search_t1"), new Color(144, 238, 144), 20, edificiosDisponiblesOr, aulasDisponiblesOr);
+        RoundedPanel destinoPanel = createSidePanel(LanguageManager.getBundle().getString("search_t2"), new Color(240, 128, 128), 20, edificiosDisponiblesDst ,aulasDisponiblesDst);
 
         centerPanel.add(origenPanel);
         centerPanel.add(destinoPanel);
@@ -68,14 +71,18 @@ public class Busqueda extends JPanel {
         panel.setBackground(bgColor);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        panel.setPreferredSize(new Dimension(300, 180));
+        
         JLabel titleLabel = new JLabel(title);
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 40));
+        titleLabel.setBackground(Color.WHITE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(titleLabel);
         panel.add(Box.createVerticalStrut(20));
 
         JLabel edificioLabel = new JLabel(LanguageManager.getBundle().getString("search_minitxt1"));
+        edificioLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         JComboBox<String> edificioBox = new JComboBox<>(edificios);
         edificioBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
@@ -83,9 +90,10 @@ public class Busqueda extends JPanel {
         panel.add(Box.createVerticalStrut(5));
         panel.add(edificioBox);
 
-        panel.add(Box.createVerticalStrut(15));
+        panel.add(Box.createVerticalStrut(160));
 
         JLabel aulaLabel = new JLabel(LanguageManager.getBundle().getString("search_minitxt2"));
+        aulaLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         JComboBox<String> aulaBox = new JComboBox<>(aulas);
         aulaBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
