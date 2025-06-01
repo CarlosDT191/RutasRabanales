@@ -1,9 +1,8 @@
 package rutas;
 
+import bundle.LanguageManager;
 import java.awt.*;
 import javax.swing.*;
-
-import bundle.LanguageManager;
 import rutas.components.RoundedButton;
 import rutas.components.RoundedPanel;
 
@@ -51,6 +50,7 @@ public class Busqueda extends JPanel {
         RoundedButton buscarBtn = new RoundedButton(LanguageManager.getBundle().getString("search_search"), 20, false, false);
         buscarBtn.setBackground(new Color(36, 30, 78));
         buscarBtn.setPreferredSize(new Dimension(200, 40));
+        buscarBtn.addActionListener(e -> appFrame.setContent(new Mapa(appFrame,"data/ruta1.PNG",1)));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
