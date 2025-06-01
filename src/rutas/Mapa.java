@@ -6,7 +6,9 @@ import java.io.File;
 import javax.swing.*;
 
 import bundle.LanguageManager;
+import rutas.components.CircularPanel;
 import rutas.components.RoundedButton;
+import rutas.components.RoundedPanel;
 
 public class Mapa extends JPanel {
 
@@ -29,23 +31,36 @@ public class Mapa extends JPanel {
             return;
         }
 
-        
         ImageIcon icon = new ImageIcon(rutaImagen);
         Image rawImage = icon.getImage();
         int imgWidth = rawImage.getWidth(null);
         int imgHeight = rawImage.getHeight(null);
 
-        // Si es muy pequeña, la agrandamos artificialmente (mejor con una imagen grande real)
+        // Si es muy pequeña, la agrandamos artificialmente
         if (imgWidth < 200 || imgHeight < 200) {
             mapImage = rawImage.getScaledInstance(800, 600, Image.SCALE_SMOOTH);
         } else {
             mapImage = rawImage;
         }
 
+        // Contenedor para título + barra de pasos
+        JPanel topContainer = new JPanel();
+        topContainer.setLayout(new BoxLayout(topContainer, BoxLayout.Y_AXIS));
+        topContainer.setBackground(Color.WHITE);
+
+        JLabel title = new JLabel("Rutas de Rabanales", SwingConstants.CENTER);
+        title.setFont(new Font("SansSerif", Font.BOLD, 30));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(new Color(36, 30, 78));
+        title.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+
         // 2. Panel superior: selector de pasos
         JPanel stepPanel = new JPanel();
         stepPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 20));
         stepPanel.setBackground(Color.WHITE);
+
+        topContainer.add(title);
+        topContainer.add(stepPanel);
 
         for (int i = 1; i <= 3; i++) {
             final int paso = i;
@@ -56,40 +71,50 @@ public class Mapa extends JPanel {
             label.setFont(new Font("SansSerif", Font.BOLD, i == pasoActual ? 16 : 14));
             label.setForeground(i == pasoActual ? new Color(36, 30, 78) : Color.DARK_GRAY);
 
-            JPanel circle = new JPanel();
-            circle.setPreferredSize(new Dimension(20, 20));
-            circle.setBackground(i == pasoActual ? new Color(36, 30, 78) : Color.WHITE);
-            circle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-            circle.setOpaque(true);
+            Runnable onClick = () -> {
+                String nuevaRuta = switch (paso) {
+                    case 1 -> "data/ruta1.PNG";
+                    case 2 -> "data/ruta2.PNG";
+                    case 3 -> "data/ruta3.PNG";
+                    default -> rutaImagen;
+                };
+                appFrame.setContent(new Mapa(appFrame, nuevaRuta, paso));
+            };
+
+            Color color = Color.LIGHT_GRAY;
+            if(i==pasoActual){
+                color= new Color(36, 30, 78);
+            }
+            else if(i< pasoActual){
+                color= new Color(51,45,98);
+            }
+            else{
+                color= Color.LIGHT_GRAY;
+            }
+            CircularPanel circle = new CircularPanel(color, onClick);
+            circle.setPreferredSize(new Dimension(24, 24));
 
             step.add(label, BorderLayout.NORTH);
             step.add(circle, BorderLayout.CENTER);
 
-            step.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            step.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    String nuevaRuta = switch (paso) {
-                        case 1 -> "data/ruta1.PNG";
-                        case 2 -> "data/ruta2.PNG";
-                        case 3 -> "data/ruta3.PNG";
-                        default -> rutaImagen;
-                    };
-                    appFrame.setContent(new Mapa(appFrame, nuevaRuta, paso));
-                }
-            });
-
             stepPanel.add(step);
 
             if (i < 3) {
-                JSlider slider = new JSlider();
-                slider.setEnabled(false);
-                slider.setPreferredSize(new Dimension(50, 10));
-                slider.setBackground(Color.WHITE);
-                stepPanel.add(slider);
+                RoundedPanel separator = new RoundedPanel(10);
+                separator.setPreferredSize(new Dimension(350, 10));
+        
+                // Si el paso actual es mayor que i, entonces coloreamos el separador en azul
+                if (pasoActual > i) {
+                    separator.setBackground(new Color(51, 45, 98));
+                } else {
+                    separator.setBackground(Color.LIGHT_GRAY); // o blanco
+                }
+        
+                stepPanel.add(separator);
             }
         }
 
-        add(stepPanel, BorderLayout.NORTH);
+        add(topContainer, BorderLayout.NORTH);
 
         // 3. Panel central con imagen, zoom y arrastre
         JPanel imagePanel = new JPanel() {
@@ -106,11 +131,10 @@ public class Mapa extends JPanel {
             }
         };
 
-        imagePanel.setPreferredSize(new Dimension(600, 400));
+        imagePanel.setPreferredSize(new Dimension(800, 500)); // << Cambia el tamaño del marco aquí
         imagePanel.setBackground(Color.WHITE);
         imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        // Zoom con rueda del ratón
         imagePanel.addMouseWheelListener(e -> {
             double delta = 0.1f * e.getPreciseWheelRotation();
             scale -= delta;
@@ -118,7 +142,6 @@ public class Mapa extends JPanel {
             imagePanel.repaint();
         });
 
-        // Arrastrar imagen
         imagePanel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 dragStart = e.getPoint();
